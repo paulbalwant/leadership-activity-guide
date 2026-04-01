@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leadership Play Activity – Student Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #faf8f3;
+    --accent: #c0392b;
+    --gold: #b8860b;
+    --muted: #6b6357;
+    --border: #d4cfc5;
+    --card-bg: #fff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── MASTHEAD ─── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    border-bottom: 4px solid var(--accent);
+    position: relative; overflow: hidden;
+  }
+  .masthead::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 18px,
+      rgba(255,255,255,.03) 18px, rgba(255,255,255,.03) 19px
+    );
+    pointer-events: none;
+  }
+  .masthead .kicker {
+    font-size: .75rem; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: .5rem; font-weight: 600;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900; line-height: 1.1; margin-bottom: .6rem;
+  }
+  .masthead .subtitle {
+    font-size: .95rem; color: #c8c2b8;
+    font-style: italic; max-width: 520px; margin: 0 auto;
+  }
+  .masthead .rule { width: 60px; height: 3px; background: var(--accent); margin: 1rem auto .6rem; }
+
+  /* ─── LAYOUT ─── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 1.2rem 4rem; }
+
+  .section-label { display: flex; align-items: center; gap: .8rem; margin: 2.8rem 0 1rem; }
+  .section-label .num {
+    background: var(--accent); color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; letter-spacing: .01em;
+    border-bottom: 1px solid var(--border); flex: 1; padding-bottom: .3rem;
+  }
+
+  /* ─── THREE ACTS ─── */
+  .three-acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .act-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-top: 3px solid var(--ink); padding: 1.2rem 1.1rem; border-radius: 2px;
+  }
+  .act-card.highlight { border-top-color: var(--accent); }
+  .act-card .act-title { font-family: 'Playfair Display', serif; font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: .3rem; }
+  .act-card .act-heading { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: .6rem; }
+  .act-card p, .act-card li { font-size: .88rem; color: #3d3830; line-height: 1.6; }
+  .act-card ul { padding-left: 1.1rem; }
+  .act-card li { margin-bottom: .2rem; }
+
+  /* ─── ALERT ─── */
+  .alert { background: #fff8ec; border-left: 4px solid var(--gold); padding: .9rem 1.1rem; margin: 1.2rem 0; font-size: .88rem; border-radius: 0 3px 3px 0; }
+  .alert strong { color: var(--gold); }
+
+  /* ─── TOPIC GRID ─── */
+  .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: .5rem; }
+  .topic-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden; cursor: pointer;
+    transition: transform .18s, box-shadow .18s;
+    text-decoration: none; display: block;
+  }
+  .topic-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.13); }
+  .topic-card .tc-header {
+    background: var(--ink); color: var(--paper);
+    padding: 1rem 1rem .9rem; display: flex; align-items: flex-start; gap: .7rem;
+  }
+  .topic-card .tc-header.red   { background: #8b1a1a; }
+  .topic-card .tc-header.teal  { background: #115e59; }
+  .topic-card .tc-header.navy  { background: #1e3a5f; }
+  .topic-card .tc-header.plum  { background: #4a1a4a; }
+  .topic-card .tc-header.olive { background: #3a4a1a; }
+  .topic-card .tc-header.slate { background: #2a3a4a; }
+  .tc-badge { font-family: 'Playfair Display', serif; font-size: .75rem; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 2px; padding: .15rem .45rem; white-space: nowrap; margin-top: .1rem; flex-shrink: 0; }
+  .tc-title { font-family: 'Playfair Display', serif; font-size: .98rem; font-weight: 700; line-height: 1.3; }
+  .tc-preview { padding: .85rem 1rem .9rem; font-size: .83rem; color: #3a3530; line-height: 1.55; }
+  .tc-footer { padding: .5rem 1rem .7rem; font-size: .78rem; color: var(--accent); font-weight: 600; letter-spacing: .04em; border-top: 1px solid var(--border); }
+
+  /* ─── CHECKLIST ─── */
+  .checklist { list-style: none; padding: 0; margin-top: .4rem; }
+  .checklist li { display: flex; align-items: flex-start; gap: .6rem; font-size: .9rem; padding: .5rem .6rem; border-bottom: 1px solid var(--border); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .icon { width: 1.3rem; height: 1.3rem; border: 2px solid var(--ink); border-radius: 3px; flex-shrink: 0; margin-top: .1rem; position: relative; }
+  .checklist li.required .icon { border-color: var(--accent); }
+  .checklist li.required .icon::after { content: '★'; font-size: .6rem; color: var(--accent); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+  footer { border-top: 2px solid var(--ink); padding: 1.2rem 1.5rem; text-align: center; font-size: .78rem; color: var(--muted); font-style: italic; background: var(--paper); }
+
+  /* ═══════════════════════
+     DETAIL PAGES
+  ═══════════════════════ */
+  .detail-nav { background: var(--ink); padding: .75rem 1.4rem; display: flex; align-items: center; gap: .8rem; }
+  .back-btn {
+    background: none; border: 1px solid rgba(255,255,255,.35); color: #fff;
+    font-family: 'Source Serif 4', serif; font-size: .82rem;
+    padding: .35rem .9rem; border-radius: 2px; cursor: pointer; transition: background .15s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,.12); }
+  .back-btn::before { content: '← '; }
+  .detail-nav .nav-label { font-size: .78rem; color: #a09890; letter-spacing: .08em; text-transform: uppercase; }
+
+  .detail-hero { color: var(--paper); padding: 2rem 1.4rem 1.6rem; border-bottom: 4px solid rgba(255,255,255,.15); }
+  .detail-hero .group-tag { font-size: .72rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; background: rgba(255,255,255,.2); padding: .2rem .6rem; border-radius: 2px; display: inline-block; margin-bottom: .7rem; }
+  .detail-hero h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900; line-height: 1.15; margin-bottom: .5rem; }
+  .detail-hero .core-idea { font-size: .92rem; opacity: .88; font-style: italic; max-width: 600px; }
+
+  .detail-body { max-width: 760px; margin: 0 auto; padding: 1.8rem 1.2rem 4rem; }
+  .detail-section { margin-bottom: 2rem; }
+  .detail-section h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: .3rem; margin-bottom: .85rem; }
+
+  .behaviour-list { padding-left: 0; list-style: none; }
+  .behaviour-list li { display: flex; align-items: flex-start; gap: .7rem; font-size: .9rem; line-height: 1.6; padding: .5rem 0; border-bottom: 1px solid #eee; }
+  .behaviour-list li:last-child { border-bottom: none; }
+  .behaviour-list .dot { width: .55rem; height: .55rem; background: var(--accent); border-radius: 50%; flex-shrink: 0; margin-top: .55rem; }
+
+  .scene-box { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--gold); padding: 1rem 1.1rem; border-radius: 0 4px 4px 0; font-size: .88rem; line-height: 1.6; }
+  .scene-box strong { color: var(--gold); }
+
+  .warning-box { background: #fff0f0; border: 1px solid #e8b4b4; border-left: 4px solid var(--accent); padding: .9rem 1.1rem; border-radius: 0 4px 4px 0; font-size: .87rem; line-height: 1.6; font-style: italic; color: #7a2020; }
+
+  .overlap-note { background: #f0f4f8; border: 1px solid #c5d0db; padding: .85rem 1rem; border-radius: 4px; font-size: .84rem; line-height: 1.6; color: #3a4a5a; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ MAIN PAGE ═══════════════════════ -->
+<div id="main-page" class="page active">
+  <div class="masthead">
+    <div class="kicker">OB Undergraduate Course · In-Class Activity</div>
+    <h1>Power &amp; Leadership<br>Playwriting Assignment</h1>
+    <div class="rule"></div>
+    <p class="subtitle">A guide to help your group write, perform, and debrief your short dramatic play</p>
+  </div>
+
+  <div class="container">
+
+    <div class="section-label"><div class="num">1</div><h2>Required Structure — Three Parts</h2></div>
+
+    <div class="alert"><strong>⚠ All three parts are mandatory.</strong> Omitting the Prologue or the Debrief will result in an incomplete performance. Each part serves a distinct academic purpose.</div>
+
+    <div class="three-acts">
+      <div class="act-card highlight">
+        <div class="act-title">Part A · Before the play</div>
+        <div class="act-heading">Prologue</div>
+        <ul>
+          <li>Read aloud to the class — not acted</li>
+          <li>Describe the <strong>setting</strong> — this can be an organisation, a fictional world, a sports team, a historical court, a spaceship crew, a fantasy kingdom, or any context your group chooses</li>
+          <li>Introduce each <strong>character's role</strong> within that setting</li>
+          <li>Briefly establish the <strong>situation or conflict</strong></li>
+          <li>Name the <strong>leadership theory</strong> your group is portraying</li>
+        </ul>
+      </div>
+      <div class="act-card">
+        <div class="act-title">Part B · The performance</div>
+        <div class="act-heading">The Play (~5 min)</div>
+        <ul>
+          <li>Perform a short dramatic scene</li>
+          <li>Can be fictional, based on a real event, or drawn from the textbook</li>
+          <li>Cue cards are acceptable</li>
+          <li><strong>Focus on behaviours</strong> — show, don't just tell</li>
+          <li>You may incorporate more than one theory</li>
+        </ul>
+      </div>
+      <div class="act-card">
+        <div class="act-title">Part C · After the play</div>
+        <div class="act-heading">Debrief (~2 min)</div>
+        <ul>
+          <li>A brief group lecture to the class</li>
+          <li>Name the <strong>specific behaviours</strong> you portrayed and link them to theory</li>
+          <li>Invite brief questions or reactions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-label"><div class="num">2</div><h2>Your Central Focus: Behaviours</h2></div>
+
+    <p style="margin-bottom:.8rem; font-size:.93rem;">Leadership theories are only meaningful when they translate into <em>observable actions</em>. Your play must dramatize <strong>what a leader actually does</strong> — how they speak, decide, delegate, listen, challenge, and model. Abstract concepts like "vision" or "humility" only land when the audience sees them in action.</p>
+
+    <div class="alert"><strong>Tip:</strong> If someone watching your play cannot name at least two specific behaviours without reading your Prologue, your scene is too abstract. Ground every idea in a concrete moment.</div>
+
+    <div class="section-label"><div class="num">3</div><h2>Topics by Group — Click for Behavioural Guidance</h2></div>
+
+    <div class="topic-grid">
+      <div class="topic-card" onclick="showTopic('t1')">
+        <div class="tc-header navy"><div class="tc-badge">Group 1</div><div class="tc-title">Initiating Structure &amp; Consideration</div></div>
+        <div class="tc-preview">Task-oriented and people-oriented behaviours — two complementary styles every leader needs.</div>
+        <div class="tc-footer">View behavioural guide →</div>
+      </div>
+      <div class="topic-card" onclick="showTopic('t2')">
+        <div class="tc-header teal"><div class="tc-badge">Group 2</div><div class="tc-title">Shared or Distributed Leadership</div></div>
+        <div class="tc-preview">Leadership as a role, not a fixed position — team members leading each other based on expertise and situation.</div>
+        <div class="tc-footer">View behavioural guide →</div>
+      </div>
+      <div class="topic-card" onclick="showTopic('t3')">
+        <div class="tc-header plum"><div class="tc-badge">Group 3</div><div class="tc-title">Transformational / Visionary Leadership</div></div>
+        <div class="tc-preview">A vision-focused leader who inspires, models, and builds follower commitment to a compelling future state.</div>
+        <div class="tc-footer">View behavioural guide →</div>
+      </div>
+      <div class="topic-card" onclick="showTopic('t4')">
+        <div class="tc-header olive"><div class="tc-badge">Group 4</div><div class="tc-title">Servant Leadership</div></div>
+        <div class="tc-preview">The leader's primary purpose is to serve followers — their needs, growth, and development come first.</div>
+        <div class="tc-footer">View behavioural guide →</div>
+      </div>
+      <div class="topic-card" onclick="showTopic('t5')">
+        <div class="tc-header red"><div class="tc-badge">Group 5</div><div class="tc-title">Destructive Leadership</div></div>
+        <div class="tc-preview">The dark side of leadership — volitional behaviours that genuinely harm followers or the organisation.</div>
+        <div class="tc-footer">View behavioural guide →</div>
+      </div>
+      <div class="topic-card" onclick="showTopic('t6')">
+        <div class="tc-header slate"><div class="tc-badge">Group 6</div><div class="tc-title">Leading Change</div></div>
+        <div class="tc-preview">Guiding people through transformation — a process with its own distinct behavioural demands at each stage.</div>
+        <div class="tc-footer">View behavioural guide →</div>
+      </div>
+    </div>
+
+    <div class="section-label"><div class="num">4</div><h2>Pre-Performance Checklist</h2></div>
+    <p style="margin-bottom:.8rem; font-size:.88rem; color:var(--muted);">Use this before you perform. Items marked ★ are non-negotiable.</p>
+    <ul class="checklist">
+      <li class="required"><div class="icon"></div><span>We have written and will read aloud a <strong>Prologue</strong> that names the setting, characters, and leadership theory</span></li>
+      <li class="required"><div class="icon"></div><span>Our play shows at least <strong>two specific, named behaviours</strong> from our theory</span></li>
+      <li class="required"><div class="icon"></div><span>We have prepared a <strong>2-minute Debrief</strong> that names those behaviours explicitly and links them to theory</span></li>
+      <li><div class="icon"></div><span>Our scene runs approximately <strong>5 minutes</strong> (time yourselves in rehearsal)</span></li>
+      <li><div class="icon"></div><span>Every group member has a <strong>speaking role</strong> in at least one part of the activity</span></li>
+      <li><div class="icon"></div><span>We are not merely describing our theory — we are <strong>showing it through action</strong></span></li>
+    </ul>
+
+  </div>
+  <footer>Organisational Behaviour · Leadership Unit · For in-class use only</footer>
+</div>
+
+<!-- ═══════════════════════ T1 ═══════════════════════ -->
+<div id="page-t1" class="page">
+  <div class="detail-nav"><button class="back-btn" onclick="showMain()">Back to Guide</button><span class="nav-label">Group 1 · Behavioural Guide</span></div>
+  <div class="detail-hero" style="background:#1e3a5f;">
+    <div class="group-tag">Group 1</div>
+    <h2>Initiating Structure &amp;<br>Consideration</h2>
+    <p class="core-idea">Two complementary behavioural styles — one focused on getting the work done, the other on the people doing it. Both are necessary, and both are dramatizable.</p>
+  </div>
+  <div class="detail-body">
+    <div class="detail-section">
+      <h3>Task-Oriented Behaviours to Show</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Assigning work clearly and specifying each person's responsibilities</span></li>
+        <li><div class="dot"></div><span>Setting goals and deadlines, then following up with specific performance feedback</span></li>
+        <li><div class="dot"></div><span>Establishing procedures and planning future work</span></li>
+        <li><div class="dot"></div><span>Holding team members accountable to clear standards</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>People-Oriented Behaviours to Show</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Showing genuine concern for an employee's personal needs or wellbeing</span></li>
+        <li><div class="dot"></div><span>Recognising and acknowledging individual contributions publicly</span></li>
+        <li><div class="dot"></div><span>Listening actively to concerns without immediately jumping to solutions</span></li>
+        <li><div class="dot"></div><span>Taking visible steps to make the work environment more positive or supportive</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Scene Suggestion</h3>
+      <div class="scene-box"><strong>Contrast is your friend.</strong> Show the same leader handling two different situations — one requiring structure (e.g., a missed deadline) and one requiring consideration (e.g., a team member struggling personally). Placing both in the same scene reveals that the two styles are complementary, not interchangeable.</div>
+    </div>
+    <div class="detail-section">
+      <h3>Debrief Pointers</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Name at least one task-oriented and one people-oriented behaviour you showed</span></li>
+        <li><div class="dot"></div><span>Explain why neither style alone is sufficient — this is the core insight of this framework</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ T2 ═══════════════════════ -->
+<div id="page-t2" class="page">
+  <div class="detail-nav"><button class="back-btn" onclick="showMain()">Back to Guide</button><span class="nav-label">Group 2 · Behavioural Guide</span></div>
+  <div class="detail-hero" style="background:#115e59;">
+    <div class="group-tag">Group 2</div>
+    <h2>Shared or Distributed<br>Leadership</h2>
+    <p class="core-idea">Leadership is a <em>role</em>, not a fixed position assigned to one person. Team members lead each other based on expertise, situation, and need.</p>
+  </div>
+  <div class="detail-body">
+    <div class="detail-section">
+      <h3>Key Behaviours to Show</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>A formal leader explicitly delegating authority to a team member for a specific task</span></li>
+        <li><div class="dot"></div><span>A peer stepping up to champion an idea or guide others — without being asked</span></li>
+        <li><div class="dot"></div><span>Team members influencing each other's decisions through expertise, not position</span></li>
+        <li><div class="dot"></div><span>A culture of collaboration (not competition) visible in how characters speak and respond</span></li>
+        <li><div class="dot"></div><span>Someone developing their influence skills, actively encouraged by the formal leader</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Conditions That Enable Shared Leadership</h3>
+      <p style="font-size:.88rem; margin-bottom:.5rem;">Your scene can also dramatize <em>why</em> shared leadership works by depicting these enabling conditions:</p>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Formal leaders willing to share power — not hoard it</span></li>
+        <li><div class="dot"></div><span>A collaborative rather than competitive team culture</span></li>
+        <li><div class="dot"></div><span>Employees with developed influence and communication skills</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Scene Suggestion</h3>
+      <div class="scene-box"><strong>Avoid the committee meeting cliché.</strong> Try a self-managing team navigating a sudden crisis — a system failure, a client emergency, a last-minute collapse. Who steps up? How does the formal leader respond when a peer takes charge? The most interesting moment is when a follower leads and the formal leader follows gracefully.</div>
+    </div>
+    <div class="detail-section">
+      <h3>Debrief Pointers</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Identify the moment in your scene when leadership "shifted" from the formal leader to a peer</span></li>
+        <li><div class="dot"></div><span>Explain what made that shift possible — which enabling conditions were present?</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ T3 ═══════════════════════ -->
+<div id="page-t3" class="page">
+  <div class="detail-nav"><button class="back-btn" onclick="showMain()">Back to Guide</button><span class="nav-label">Group 3 · Behavioural Guide</span></div>
+  <div class="detail-hero" style="background:#4a1a4a;">
+    <div class="group-tag">Group 3</div>
+    <h2>Transformational /<br>Visionary Leadership</h2>
+    <p class="core-idea">A vision-focused leader who uses specific behaviours to communicate a compelling future, model it personally, and inspire followers to achieve goals aligned with it.</p>
+  </div>
+  <div class="detail-body">
+    <div class="detail-section">
+      <h3>The Four Elements — Behaviours to Show</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span><strong>Develop &amp; communicate the vision:</strong> Frame a future state with passion and sincerity; use symbols, metaphors, or stories to make it vivid</span></li>
+        <li><div class="dot"></div><span><strong>Model the vision:</strong> The leader acts in line with the vision — followers see them "walking the talk," not just preaching it</span></li>
+        <li><div class="dot"></div><span><strong>Encourage experimentation:</strong> Challenge followers' assumptions; reward those who try new approaches, even if they fail</span></li>
+        <li><div class="dot"></div><span><strong>Build commitment:</strong> Celebrate progress; give individual recognition; show followers how their work connects to the larger vision</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Bass Framework Behaviours</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span><strong>Inspirational motivation:</strong> Communicating with enthusiasm and optimism; using symbols to focus collective effort</span></li>
+        <li><div class="dot"></div><span><strong>Individualised consideration:</strong> Treating each follower as a unique individual; giving personalised attention to their specific needs and development</span></li>
+        <li><div class="dot"></div><span><strong>Intellectual stimulation:</strong> Challenging followers' assumptions and helping them analyse problems from new angles</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Scene Suggestion</h3>
+      <div class="scene-box"><strong>A leader rallying a demoralised team after a setback.</strong> Show how communicating a clear vision, acknowledging individual struggles, and recognising small wins rebuilds commitment. The most powerful scenes show the leader <em>changing someone's emotional state</em> through behaviour — not just a rousing speech.</div>
+    </div>
+    <div class="detail-section">
+      <h3>Debrief Pointers</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Name which of the four elements (or Bass behaviours) your scene depicted, and how</span></li>
+        <li><div class="dot"></div><span>Distinguish transformational leadership from simply being enthusiastic or charismatic — it is defined by specific behaviours, not personality</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ T4 ═══════════════════════ -->
+<div id="page-t4" class="page">
+  <div class="detail-nav"><button class="back-btn" onclick="showMain()">Back to Guide</button><span class="nav-label">Group 4 · Behavioural Guide</span></div>
+  <div class="detail-hero" style="background:#3a4a1a;">
+    <div class="group-tag">Group 4</div>
+    <h2>Servant Leadership</h2>
+    <p class="core-idea">The leader's primary purpose is to serve followers — their needs, growth, and development come before the leader's own interests. Think: selfless, humble, empathetic, ethical.</p>
+  </div>
+  <div class="detail-body">
+    <div class="detail-section">
+      <h3>I-SHAPE: Six Dimensions to Dramatize</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span><strong>Interpersonal acceptance (I):</strong> Responding with warmth, compassion, and forgiveness when a follower makes a mistake — understanding their perspective rather than punishing the error</span></li>
+        <li><div class="dot"></div><span><strong>Stewardship (S):</strong> Visibly prioritising the team's interests over personal gain, credit, or recognition</span></li>
+        <li><div class="dot"></div><span><strong>Humility (H):</strong> Openly acknowledging that others know more; giving credit to the team; being genuinely modest about one's own accomplishments</span></li>
+        <li><div class="dot"></div><span><strong>Authenticity (A):</strong> Expressing honest thoughts and feelings rather than performing authority or maintaining a facade</span></li>
+        <li><div class="dot"></div><span><strong>Providing direction (P):</strong> Clearly informing followers what is expected — servant leaders still direct, they just do it in service of others' success</span></li>
+        <li><div class="dot"></div><span><strong>Empowering &amp; developing (E):</strong> Actively coaching, sharing information, and building followers' capabilities rather than creating dependence on the leader</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Scene Suggestion</h3>
+      <div class="scene-box"><strong>Show service at personal cost.</strong> A leader who passes all credit to the team after a major success, then stays behind to mentor a struggling team member on their own time. The key is that the leader's behaviour costs them something — comfort, recognition, time — and they choose the follower's needs anyway.</div>
+    </div>
+    <div class="detail-section">
+      <h3>Debrief Pointers</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Name at least two I-SHAPE dimensions your scene depicted and how you showed them</span></li>
+        <li><div class="dot"></div><span>Address the misconception that servant leaders are "weak" — note that direction and stewardship are also core parts of servant leadership</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ T5 ═══════════════════════ -->
+<div id="page-t5" class="page">
+  <div class="detail-nav"><button class="back-btn" onclick="showMain()">Back to Guide</button><span class="nav-label">Group 5 · Behavioural Guide</span></div>
+  <div class="detail-hero" style="background:#8b1a1a;">
+    <div class="group-tag">Group 5</div>
+    <h2>Destructive Leadership</h2>
+    <p class="core-idea">Volitional leader behaviour that genuinely harms followers and/or the organisation — through harmful methods of influence or by pursuing goals that contradict legitimate interests.</p>
+  </div>
+  <div class="detail-body">
+    <div class="detail-section">
+      <h3>Critical Distinction</h3>
+      <div class="warning-box">Destructive leadership is <strong>not</strong> simply being strict, demanding, or unpopular. It involves genuine harm — psychological, ethical, or organisational. A leader who holds high standards is not automatically destructive. Play this for real, not for laughs.</div>
+    </div>
+    <div class="detail-section">
+      <h3>Behaviours to Show</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Intimidating, humiliating, or belittling followers — in public or in private</span></li>
+        <li><div class="dot"></div><span>Taking credit for others' work; deflecting blame downward onto followers</span></li>
+        <li><div class="dot"></div><span>Encouraging followers to act against the organisation's legitimate interests (e.g., covering up problems, cutting ethical corners)</span></li>
+        <li><div class="dot"></div><span>Using fear or manipulation as the primary tool of influence rather than legitimate means</span></li>
+        <li><div class="dot"></div><span>Silencing dissent — punishing honest feedback or creating an atmosphere where no one dares speak up</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Scene Suggestion</h3>
+      <div class="scene-box"><strong>Show the consequences, not just the behaviour.</strong> The most powerful scenes depict how followers are affected — their silence, fear, disengagement, or ethical compromise. Show the ripple effect on the team or organisation, not only the leader's actions. This is what makes it genuinely "destructive."</div>
+    </div>
+    <div class="detail-section">
+      <h3>Debrief Pointers</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Distinguish your portrayal from mere strictness — explain why the behaviours cross into genuine harm</span></li>
+        <li><div class="dot"></div><span>Note that destructive leadership can coexist with organisational success — some destructive leaders are "effective" by narrow metrics</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ T6 ═══════════════════════ -->
+<div id="page-t6" class="page">
+  <div class="detail-nav"><button class="back-btn" onclick="showMain()">Back to Guide</button><span class="nav-label">Group 6 · Behavioural Guide</span></div>
+  <div class="detail-hero" style="background:#2a3a4a;">
+    <div class="group-tag">Group 6</div>
+    <h2>Leading Change</h2>
+    <p class="core-idea">Leading change concerns the <em>process</em> of guiding people through transformation. It draws on multiple leadership styles but has its own distinct behavioural demands at each stage.</p>
+  </div>
+  <div class="detail-body">
+    <div class="detail-section">
+      <h3>Key Behaviours Across the Change Process</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span><strong>Creating urgency:</strong> Making a compelling case for why change must happen now — what happens if the organisation does not act?</span></li>
+        <li><div class="dot"></div><span><strong>Building a coalition:</strong> Actively recruiting specific people to champion the change; not waiting for enthusiasm to emerge on its own</span></li>
+        <li><div class="dot"></div><span><strong>Communicating the vision:</strong> Repeating the vision clearly and consistently — leaders dramatically underestimate how much communication is needed</span></li>
+        <li><div class="dot"></div><span><strong>Empowering others to act:</strong> Removing obstacles rather than controlling every step; trusting others to execute</span></li>
+        <li><div class="dot"></div><span><strong>Generating short-term wins:</strong> Identifying and celebrating early successes to build momentum and credibility</span></li>
+        <li><div class="dot"></div><span><strong>Acknowledging fears and uncertainty:</strong> Recognising what followers are losing, not just what they are gaining — interpersonal acceptance is critical here</span></li>
+      </ul>
+    </div>
+    <div class="detail-section">
+      <h3>Scene Suggestion</h3>
+      <div class="scene-box"><strong>Focus on human resistance to change.</strong> Show a leader navigating a follower who is resistant, fearful, or openly opposed. How does the leader address those fears without dismissing them? The communication, coalition-building, and urgency stages are especially dramatic and easy to portray in a short scene.</div>
+    </div>
+    <div class="detail-section">
+      <h3>How This Differs from Transformational Leadership</h3>
+      <div class="overlap-note">Transformational leadership concerns <em>who the leader is and how they motivate</em>. Leading change concerns <em>the process and stages of guiding people through transformation</em>. Your debrief should focus on the process — not just the leader's vision or personality.</div>
+    </div>
+    <div class="detail-section">
+      <h3>Debrief Pointers</h3>
+      <ul class="behaviour-list">
+        <li><div class="dot"></div><span>Name which stage(s) of the change process your scene depicted</span></li>
+        <li><div class="dot"></div><span>Identify the specific leader behaviours shown at each stage</span></li>
+        <li><div class="dot"></div><span>Explain how this is distinct from transformational leadership</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showTopic(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function showMain() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('main-page').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
